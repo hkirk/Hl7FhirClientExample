@@ -17,12 +17,12 @@ namespace HL7FHIRClient.Boundary
             client.Settings.Timeout = 12000;
         }
         
-        public void CreateObservation(BpmCompleteSequence bpmCompleteSequence)  // TODO: Change signature if needed
+        public void CreateObservation(BpmCompleteSequence bpmCompleteSequence)  // TODO: 6) Change signature if needed
         {
-            // TODO: Fill in your code to create Observation in Wilfhir4.aegis.net
+            // TODO: 6) Fill in your code to create Observation in Wilfhir4.aegis.net
         }
 
-        private void MakeBpmObservation(BpmCompleteSequence bpmCompleteSequence) // TODO: Change signature if needed
+        private void MakeBpmObservation(BpmCompleteSequence bpmCompleteSequence) // TODO: 5) Change signature if needed
         {
             // Binary values in your sample data need sto be converted to texts
             // Link https://stackoverflow.com/questions/311165/how-do-you-convert-a-byte-array-to-a-hexadecimal-string-and-vice-versa
@@ -50,7 +50,7 @@ namespace HL7FHIRClient.Boundary
             eob.Code.Coding.Add(new Coding()
             {
                 System = "urn:oid:1.2.3.4.5.6",
-                Code = "AUH131328", // TODO: Replace with building/room
+                Code = "AUH131328", // TODO: 3) Replace with building/room
                 Display = "MDC_BPM_Phys_Sequence"
             });
             eob.Subject = new ResourceReference();
@@ -66,7 +66,7 @@ namespace HL7FHIRClient.Boundary
             {
                 Reference = "Student/E23",
                 Display = "Students from E23STS3ITS3",
-                // TODO: ElementId = "your initials" 
+                // TODO: 3) ElementId = "your initials" 
             });
             eob.Device = new ResourceReference();
             eob.Device.Display = "1 Transducer Device mmHG Metric";
@@ -75,27 +75,27 @@ namespace HL7FHIRClient.Boundary
             m.Code.Coding.Add(new Coding()
             {
                 System = "urn:oid:1.2.3.4.5.6",
-                Code = "AUH131328", // TODO: Replace with building/room
+                Code = "AUH131328", // TODO: 3) Replace with building/room
                 Display = "MDC_BPM_Phys_Sequence_1"
             });
             m.Value = new SampledData() 
             {
-                Origin = new Quantity { Value = 2048 }, // TODO: What here
-                Period = 3600, // TODO: What here
-                Factor = (decimal)1.612,  // TODO: What here
-                LowerLimit = -3300, // TODO: What here
-                UpperLimit = 3300, // TODO: What here
+                Origin = new Quantity { Value = 2048 }, // TODO: 4) What here
+                Period = 3600, // TODO: 4) What here
+                Factor = (decimal)1.612,  // TODO: 4) What here
+                LowerLimit = -3300, // TODO: 4) What here
+                UpperLimit = 3300, // TODO: 4) What here
                 Dimensions = 1,
                 Data = rawdata,
             };
             
-            eob.Component.Add(m);//Add the new data block to Observation
+            eob.Component.Add(m); //Add the new data block to Observation
             
             //But then how to access the juste in line 85  added SampleData Object again??
             //Well remark that Observation.ComponentComponent.Value attribute is an Element class Just place cursor over m.Value
             //Then important to notice is that SampleData class inherits the Element class! Why do you think this is the case?
             //Now a type cast is needed to acces Value as a SampleData Class just as showen in next line
-            var x = (SampledData) eob.Component[0].Value; //jrt set a breakpoint here and inspect variables
+            var x = (SampledData) eob.Component[0].Value; // TODO: 2) set a breakpoint here and inspect variables
             string d = x.Data;
             //Lesson learned: As JSON does not cares about specific object types, class definitions does not exist in JSON. In C# we do
             //need to make polymorph classes shaping more than one class. Element class shapes all needed HL7 FHIR classes in Component,
@@ -110,10 +110,10 @@ namespace HL7FHIRClient.Boundary
         
 
         // ------------------------------------------------------------------------------------------------------------
-        //Code from here are only proto type code - you can read it to get inspiration 
+        //Code from here are only prototype code - you can read it to get inspiration 
         public void Boundary_HL7FHIR_REST()
         {
-            var client1 = new FhirClient("https://vonk.fire.ly");
+            var client1 = new FhirClient("http://wildfhir4.aegis.net/fhir4-0-1");
             var client = new FhirClient("https://aseecest3fhirservice.azurewebsites.net"); //https://aseecest3fhirservice.azurewebsites.net
 
             //var k = new Fhir

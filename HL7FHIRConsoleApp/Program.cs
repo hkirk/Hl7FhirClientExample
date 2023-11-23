@@ -11,7 +11,7 @@ namespace HL7FHIRClient
         public static void Main(string[] args)
         {
             Console.WriteLine("Test of HL7FHIR!");
-            //Use breakpoint to follow the execution of this little HL7 FHIR Client, lots of breakpoints!!!
+            // TODO: 1) Use breakpoint to follow the execution of this little HL7 FHIR Client, lots of breakpoints!!!
 
             var completeSeq = new BpmCompleteSequence()
             {
@@ -21,7 +21,7 @@ namespace HL7FHIRClient
                 DurationInSeconds = 3600
             };
 
-            // Start receiving sample sequence from RPI, here the data is generated 
+            // Start receiving sample sequence from BPM device, here the data is generated 
             for (var step = 0; step < 100 /*3600*/; step++) //Simulation 1 hour in steps of second, though here truncated to 100 steps for spedding up test
             {
                 var samples = new BpmLocalSampleSequence() { NoBpmValues = 50, SequenceNo = step };
@@ -41,7 +41,7 @@ namespace HL7FHIRClient
 
             var retId = completeSeq.BpmCompleteSequenceId;
 
-            // TODO: Create HL7 Fhir Observation and send to server
+            // TODO: 2) Create HL7 Fhir Observation and send to server
         }
     }
 }
