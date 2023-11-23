@@ -54,8 +54,8 @@ namespace HL7FHIRClient.Boundary
                 Display = "MDC_BPM_Phys_Sequence"
             });
             eob.Subject = new ResourceReference();
-            eob.Subject.Reference = "AU-ECE-ST-E22";
-            eob.Subject.Display = "E22ST3-NVK";
+            eob.Subject.Reference = "AU-ECE-ST-E23";
+            eob.Subject.Display = "E23ST3ITS3";
 
             //eob.Effective = new FhirDateTime("2015-02-19T09:30:35+01:00");
             //eob.Effective = new FhirDateTime(DateTime.Now);
@@ -64,8 +64,8 @@ namespace HL7FHIRClient.Boundary
             eob.Effective = new FhirDateTime(dateTimeOffset);
             eob.Performer.Add(new ResourceReference()
             {
-                Reference = "Student/E22",
-                Display = "Students from E22STS3NVK",
+                Reference = "Student/E23",
+                Display = "Students from E23STS3ITS3",
                 // TODO: ElementId = "your initials" 
             });
             eob.Device = new ResourceReference();
