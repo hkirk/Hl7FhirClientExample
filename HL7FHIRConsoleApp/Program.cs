@@ -6,14 +6,14 @@ namespace HL7FHIRClient
 {
     public class Program
     {
-        private static readonly string serverUrl = "http://wildfhir4.aegis.net/fhir4-0-1";
+        private static readonly string serverUrl = "http://hapi.fhir.org/baseR4";
         
         public static void Main(string[] args)
         {
             Console.WriteLine("Test of HL7FHIR!");
             // TODO: 1) Use breakpoint to follow the execution of this little HL7 FHIR Client, lots of breakpoints!!!
 
-            var completeSeq = new BpmCompleteSequence()
+            var bpmCompleteSequence = new BpmCompleteSequence()
             {
                 NameOfObject = "231145-2341",
                 StartTime = DateTime.Now,
@@ -35,11 +35,14 @@ namespace HL7FHIRClient
                 Buffer.BlockCopy(data, 0, rawData, 0, data.Length * 4); //Make floats a BLOB 
                 //Third param in BlockCopy is number of bytes to copy, that's the reason to data.length *4 !
                 samples.BpmSamples = rawData; //Add data to child object
-                completeSeq.SequenceOfBpmSamples.Add(samples); //Add child object to root object
+                bpmCompleteSequence.SequenceOfBpmSamples.Add(samples); //Add child object to root object
             }
 
 
-            var retId = completeSeq.BpmCompleteSequenceId;
+            var retId = bpmCompleteSequence.BpmCompleteSequenceId;
+
+            var client = new Hl7Fhir4BpmClient(serverUrl);
+            client.CreateObservation(bpmCompleteSequence);
 
             // TODO: 2) Create HL7 Fhir Observation and send to server
         }

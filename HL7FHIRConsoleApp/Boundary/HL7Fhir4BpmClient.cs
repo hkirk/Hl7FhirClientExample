@@ -19,10 +19,11 @@ namespace HL7FHIRClient.Boundary
         
         public void CreateObservation(BpmCompleteSequence bpmCompleteSequence)  // TODO: 6) Change signature if needed
         {
-            // TODO: 6) Fill in your code to create Observation in Wilfhir4.aegis.net
+            var result = client.Create(MakeBpmObservation(bpmCompleteSequence));
+            var id = result.Id;
         }
 
-        private void MakeBpmObservation(BpmCompleteSequence bpmCompleteSequence) // TODO: 5) Change signature if needed
+        private Observation MakeBpmObservation(BpmCompleteSequence bpmCompleteSequence) // TODO: 5) Change signature if needed
         {
             // Binary values in your sample data need sto be converted to texts
             // Link https://stackoverflow.com/questions/311165/how-do-you-convert-a-byte-array-to-a-hexadecimal-string-and-vice-versa
@@ -50,12 +51,14 @@ namespace HL7FHIRClient.Boundary
             eob.Code.Coding.Add(new Coding()
             {
                 System = "urn:oid:1.2.3.4.5.6",
-                Code = "AUH131328", // TODO: 3) Replace with building/room
+                Code = "5125-423",
                 Display = "MDC_BPM_Phys_Sequence"
             });
-            eob.Subject = new ResourceReference();
-            eob.Subject.Reference = "AU-ECE-ST-E23";
-            eob.Subject.Display = "E23ST3ITS3";
+            eob.Subject = new ResourceReference()
+            {
+                Reference = "Patient/47936371", // TODO find a patient reference
+                Display =  "E25ST3ITS3"
+            };
 
             //eob.Effective = new FhirDateTime("2015-02-19T09:30:35+01:00");
             //eob.Effective = new FhirDateTime(DateTime.Now);
@@ -64,9 +67,9 @@ namespace HL7FHIRClient.Boundary
             eob.Effective = new FhirDateTime(dateTimeOffset);
             eob.Performer.Add(new ResourceReference()
             {
-                Reference = "Student/E23",
-                Display = "Students from E23STS3ITS3",
-                // TODO: 3) ElementId = "your initials" 
+                Reference = "Practitioner/2118638", // TODO find a practitioner id
+                Display = "Students from E25STS3ITS3",
+                ElementId = "hbk" // TODO : 3) Replace with your  nitial 
             });
             eob.Device = new ResourceReference();
             eob.Device.Display = "1 Transducer Device mmHG Metric";
@@ -100,7 +103,7 @@ namespace HL7FHIRClient.Boundary
             //Lesson learned: As JSON does not cares about specific object types, class definitions does not exist in JSON. In C# we do
             //need to make polymorph classes shaping more than one class. Element class shapes all needed HL7 FHIR classes in Component,
             //SampleData shapes only one specific class but can be carried in an Element class
-            
+            return eob;
         }
         
         private static string ByteArrayToString(byte[] ba)
@@ -113,15 +116,12 @@ namespace HL7FHIRClient.Boundary
         //Code from here are only prototype code - you can read it to get inspiration 
         public void Boundary_HL7FHIR_REST()
         {
-            var client1 = new FhirClient("http://wildfhir4.aegis.net/fhir4-0-1");
-            var client = new FhirClient("https://aseecest3fhirservice.azurewebsites.net"); //https://aseecest3fhirservice.azurewebsites.net
-
+            
             //var k = new Fhir
             //client.PreferredFormat = ResourceFormat.Unknown;
             // client.UseFormatParam = true; //depends on the sever  format in url or in header (default)
             // client.ReturnFullResource = false; //Give minimal response
-            client1.Settings.Timeout = 120000; // The timeout is set in milliseconds, with a default of 100000
-
+            
             client.Settings.Timeout = 120000; // The timeout is set in milliseconds, with a default of 100000
                         
 
