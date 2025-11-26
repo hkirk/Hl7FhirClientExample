@@ -19,7 +19,7 @@ namespace HL7FHIRClient.Boundary
         
         public void CreateObservation(BpmCompleteSequence bpmCompleteSequence)  // TODO: 6) Change signature if needed
         {
-            // TODO: 6) Fill in your code to create Observation in Wilfhir4.aegis.net
+            // TODO: 6) Fill in your code to create Observation object and upload to client url
         }
 
         private void MakeBpmObservation(BpmCompleteSequence bpmCompleteSequence) // TODO: 5) Change signature if needed
@@ -53,9 +53,11 @@ namespace HL7FHIRClient.Boundary
                 Code = "AUH131328", // TODO: 3) Replace with building/room
                 Display = "MDC_BPM_Phys_Sequence"
             });
-            eob.Subject = new ResourceReference();
-            eob.Subject.Reference = "AU-ECE-ST-E23";
-            eob.Subject.Display = "E23ST3ITS3";
+            eob.Subject = new ResourceReference()
+            {
+                Reference = "Patient/12345", // TODO Replace with Patient from https://hapi.fhir.org/resource?serverId=home_r4&pretty=true&_summary=&resource=Patient
+                Display = "E25ST3ITS3"
+            };
 
             //eob.Effective = new FhirDateTime("2015-02-19T09:30:35+01:00");
             //eob.Effective = new FhirDateTime(DateTime.Now);
@@ -64,8 +66,8 @@ namespace HL7FHIRClient.Boundary
             eob.Effective = new FhirDateTime(dateTimeOffset);
             eob.Performer.Add(new ResourceReference()
             {
-                Reference = "Student/E23",
-                Display = "Students from E23STS3ITS3",
+                Reference = "Practitioner/123456", // TODO: 3) Replace with practitioner from https://hapi.fhir.org/resource?serverId=home_r4&pretty=true&_summary=&resource=Practitioner
+                Display = "Students from E25STS3ITS3",
                 // TODO: 3) ElementId = "your initials" 
             });
             eob.Device = new ResourceReference();
@@ -75,11 +77,12 @@ namespace HL7FHIRClient.Boundary
             m.Code.Coding.Add(new Coding()
             {
                 System = "urn:oid:1.2.3.4.5.6",
-                Code = "AUH131328", // TODO: 3) Replace with building/room
+                Code = "AUH131328", // TODO: 3) Replace with building/room we are in now
                 Display = "MDC_BPM_Phys_Sequence_1"
             });
             m.Value = new SampledData() 
             {
+                // TODO:4 This object contains your BPM data as raw binary data, so you need to calculate som basic values to add to the data
                 Origin = new Quantity { Value = 2048 }, // TODO: 4) What here
                 Period = 3600, // TODO: 4) What here
                 Factor = (decimal)1.612,  // TODO: 4) What here
@@ -95,9 +98,9 @@ namespace HL7FHIRClient.Boundary
             //Well remark that Observation.ComponentComponent.Value attribute is an Element class Just place cursor over m.Value
             //Then important to notice is that SampleData class inherits the Element class! Why do you think this is the case?
             //Now a type cast is needed to acces Value as a SampleData Class just as showen in next line
-            var x = (SampledData) eob.Component[0].Value; // TODO: 2) set a breakpoint here and inspect variables
+            var x = (SampledData) eob.Component[0].Value; // TODO: 2) set a breakpoint here and inspect variables. Note make sure this method is called
             string d = x.Data;
-            //Lesson learned: As JSON does not cares about specific object types, class definitions does not exist in JSON. In C# we do
+            //Lesson learned: As JSON does not care about specific object types, class definitions does not exist in JSON. In C# we do
             //need to make polymorph classes shaping more than one class. Element class shapes all needed HL7 FHIR classes in Component,
             //SampleData shapes only one specific class but can be carried in an Element class
             

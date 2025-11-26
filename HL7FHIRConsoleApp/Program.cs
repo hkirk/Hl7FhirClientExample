@@ -6,7 +6,7 @@ namespace HL7FHIRClient
 {
     public class Program
     {
-        private static readonly string serverUrl = "http://wildfhir4.aegis.net/fhir4-0-1";
+        private static readonly string serverUrl = "http://hapi.fhir.org/baseR4";
         
         public static void Main(string[] args)
         {
@@ -22,7 +22,7 @@ namespace HL7FHIRClient
             };
 
             // Start receiving sample sequence from BPM device, here the data is generated 
-            for (var step = 0; step < 100 /*3600*/; step++) //Simulation 1 hour in steps of second, though here truncated to 100 steps for spedding up test
+            for (var step = 0; step < 100 /*3600*/; step++) //Simulation 1 hour in steps of second, though here truncated to 100 steps for speeding up test
             {
                 var samples = new BpmLocalSampleSequence() { NoBpmValues = 50, SequenceNo = step };
                 float[] data = new float[50];
@@ -41,7 +41,7 @@ namespace HL7FHIRClient
 
             var retId = completeSeq.BpmCompleteSequenceId;
 
-            // TODO: 2) Create HL7 Fhir Observation and send to server
+            // TODO: 2) Use HL7Fhir4BPMClient to create an observation with the BpmLocalSampleSequence data create above
         }
     }
 }
