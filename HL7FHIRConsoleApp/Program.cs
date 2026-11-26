@@ -6,7 +6,7 @@ namespace HL7FHIRClient
 {
     public class Program
     {
-        private static readonly string serverUrl = "https://hapi.fhir.org/baseR4";
+        private static readonly string serverUrl = "https://hapi.fhir.org/baseR5";
         
         public static void Main(string[] args)
         {
