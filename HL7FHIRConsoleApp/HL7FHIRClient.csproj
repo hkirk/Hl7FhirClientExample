@@ -7,15 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Hl7.Fhir.ElementModel" Version="3.6.0" />
-    <PackageReference Include="Hl7.Fhir.R4" Version="3.6.0" />
-    <PackageReference Include="Hl7.Fhir.Serialization" Version="3.6.0" />
-    <PackageReference Include="Hl7.Fhir.Support" Version="3.6.0" />
-    <PackageReference Include="Hl7.Fhir.Support.Poco" Version="3.6.0" />
-    <PackageReference Include="Hl7.FhirPath" Version="3.6.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.12" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.12" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.12">
+    <PackageReference Include="Hl7.Fhir.R4" Version="6.9.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="11.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
